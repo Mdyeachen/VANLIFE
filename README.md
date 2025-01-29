@@ -4,16 +4,16 @@
 ![alt text](./ReadMePicture/home.png)
 
 ## About Page
-![alt text](./ReadMePicture/about.png.png)
+![alt text](./ReadMePicture/about.png)
 
 ## Vans Page
 ![alt text](./ReadMePicture/vans.png)
 
 ## Single Vans Page
-![alt text](./ReadMePicture/sing-van.png.png)
+![alt text](./ReadMePicture/sing-van.png)
 
 ## Host Van Page
-![alt text](./ReadMePicture/hostVan.png.png)
+![alt text](./ReadMePicture/hostVan.png)
 
 ## Host Single Page
 ![alt text](./ReadMePicture/hostSingleVan.png)
