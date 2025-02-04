@@ -14,10 +14,14 @@ import HostSingleVan from "./host/hostSingleVan"
 import HostVanDetials from "./host/hostvanDetials"
 import HostVanPrice from "./host/hostvanprice"
 import HostVanPhoto from "./host/hostvanphoto"
+import makeServer from "./../server"
+
+
+
+
 
 const Apps = () => {
-
-
+   makeServer();
    return (
 
    <>

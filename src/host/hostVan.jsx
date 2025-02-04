@@ -6,9 +6,9 @@ const HostVan = () => {
    const [ van, setVan ] = useState([]);
 
    useEffect(() => {
-      fetch("http://192.168.0.105:3001/api/vans")
+      fetch("/api/vans")
             .then(res => res.json())
-            .then(data => setVan(data))
+            .then(data => setVan(data.vans))
    }, [])
 
    const vanElement = van.map(item => (

@@ -6,9 +6,9 @@ function Vans() {
   const [ vanDetials , setVanDetails ] = useState([]);
 
   useEffect(() => {
-    fetch("http://192.168.0.105:3001/api/vans")
+    fetch("/api/vans")
           .then(res => res.json())
-          .then(data => setVanDetails(data))
+          .then(data => setVanDetails(data.vans))
   }, [])
 
   const vanElement = vanDetials.map(van => (
@@ -45,4 +45,3 @@ function Vans() {
  }
  
  export default Vans
- 

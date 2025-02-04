@@ -9,9 +9,9 @@ function Van() {
   const [ van, setVan ] = useState(null);
 
   useEffect(() => {
-    fetch(`http://192.168.0.105:3001/api/vans/${param.id}`)
+    fetch(`/api/vans/${param.id}`)
           .then(res => res.json())
-          .then(data => setVan(data));
+          .then(data => setVan(data.van));
   }, [param.id])
 
 
