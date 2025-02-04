@@ -13,7 +13,7 @@ const HostVan = () => {
 
    const vanElement = van.map(item => (
       <div key={item.id}>
-         <Link className="single-van flexRow py-3" to={`/host/vans/${item.id}`}>
+         <Link className="single-van flexRow py-3" to={item.id}>
             <img className="w-14 rounded" src={item.imageUrl} alt="" />
             <div className="vanContent">
                <h2 className="text-lg font-black">{item.name}</h2>
@@ -31,9 +31,12 @@ const HostVan = () => {
             <h1 className="text-2xl font-black capitalize">Your Listed vans</h1>
          </div>
 
-         <div className="container">
-            {vanElement}
-         </div>
+         {van.length > 0 ? (
+            <div className="container">
+               {vanElement}
+            </div>
+         ) : <h1>Loading...</h1>}
+
       </section>
       </>
    )
