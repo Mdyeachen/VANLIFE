@@ -1,29 +1,43 @@
 import { useEffect, useState } from "react"
 import { Link, useSearchParams } from "react-router-dom";
+import { getVans } from "../util/api";
 
 function Vans() {
   
-  const [ vanDetials , setVanDetails ] = useState([]);
+  const [ vanDetails , setVanDetails ] = useState([]);
   const [ searchParams, setSearchParams ] = useSearchParams();
+  const [ loading, setLoading ] = useState(false);
+  const [ error , setError ] = useState(null)
 
   useEffect(() => {
-    fetch("/api/vans")
-          .then(res => res.json())
-          .then(data => setVanDetails(data.vans))
+    async function loadVans(){
+      setLoading(true)
+      try{
+        const data = await getVans();
+        setVanDetails(data.vans);
+      } catch (err) {
+        setError(err);
+      } finally{
+        setLoading(false);
+      }
+    }
+
+    loadVans();
+
   }, [])
 
-  const uniquType = [... new Set(vanDetials.map(van => van.type))]
-  const typeParam = searchParams.getAll('type');
 
-  const selectedVans = typeParam.length > 0 ? vanDetials.filter(van => typeParam.includes(van.type)) : vanDetials;
+  const uniquType = [... new Set(vanDetails.map(van => van.type))]
+  const typeParam = searchParams.getAll('type');
+  const selectedVans = typeParam.length > 0 ? vanDetails.filter(van => typeParam.includes(van.type)) : vanDetails;
+
 
   const handleFillterBtn = (type) => {
     const newType = typeParam.includes(type) ? typeParam.filter(item => item != type) : [...typeParam, type];
-
     setSearchParams(newType.length ? {type : newType} : {})
   }
 
-
+  // fillter button appear by this element
   const filterBtn = uniquType.map(type => (
         <button 
           key={type}
@@ -36,10 +50,10 @@ function Vans() {
           </button>
   ))
 
-
+  // single van detials by looping
   const vanElement = selectedVans.map(van => (
       <div key={van.id} className="van halfWidth">
-        <Link to={`/vans/${van.id}`}>
+        <Link to={`/vans/${van.id}`} state={{search : `?${searchParams.toString()}`, type : typeParam}}>
           <img className="rounded" src={van.imageUrl} alt={van.name} />
           <div className="van-content font-bold flexCol relative gap-1.5 py-2">
             <h2 className="text-sm">{van.name}</h2>
@@ -53,40 +67,60 @@ function Vans() {
       </div>
   ))
 
+
+  // loading time show text
+  if(loading) {
+    return (
+      <div className="loading">
+        <div className="container">
+          <h1>Loading...</h1>
+        </div>
+      </div>
+    )
+  }
+
+  // error time show text
+  if(error) {
+    return (
+      <div className="loading">
+        <div className="container">
+          <h1>Error to fatching data...</h1>
+        </div>
+      </div>
+    )
+  }
+
    return (
      <>
-      <section className="vans-header flexCol gap-2 py-5">
-        <div className="container">
-          <h1 className="text-2xl font-bold">Explore our van options</h1>
-        </div>
-        <div className="container vans-filters flexRow gap-1">
-          
-          
-          {filterBtn}
-          
-          {
-            searchParams.has("type") ? (
-              <button 
-              type="button" 
-              className="filterBtn clear"
-              onClick={() => setSearchParams({})}
-              >
-                Clear Filter
-              </button>
-            ) : null
-          }
-        </div>
-      </section>
 
-      {
-        vanDetials.length > 0 ? (
-        <section className="vans">
-          <div className="container flexRow gap-3 justify-between">
-            {vanElement}
+          <section className="vans-header flexCol gap-2 py-5">
+          <div className="container">
+            <h1 className="text-2xl font-bold">Explore our van options</h1>
+          </div>
+          <div className="container vans-filters flexRow gap-1">
+            
+            
+            {filterBtn}
+            
+            {
+              searchParams.has("type") ? (
+                <button 
+                type="button" 
+                className="filterBtn clear"
+                onClick={() => setSearchParams({})}
+                >
+                  Clear Filter
+                </button>
+              ) : null
+            }
           </div>
         </section>
-        ) : <h1>Loading...</h1>
-      }
+          <section className="vans">
+            <div className="container flexRow gap-3 justify-between">
+              {vanElement}
+            </div>
+          </section>
+
      </>
    )
  }

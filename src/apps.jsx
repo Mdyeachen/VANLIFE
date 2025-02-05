@@ -5,6 +5,7 @@ import Home from "./pages/home"
 import About from "./pages/about"
 import Vans from "./pages/vans"
 import Van from "./pages/van"
+import NotFound from "./pages/notFound"
 import HostLayout from "./util/hostLayout"
 import Dashboard from "./host/dashboard"
 import Income from "./host/income"
@@ -29,6 +30,7 @@ const Apps = () => {
 
          <Routes >
             <Route path='/' element={<Layout />}>
+               <Route path="*" element={<NotFound />} />
                <Route index element={<Home />} />
                <Route path='about' element={<About />} />
 

@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { GoArrowLeft } from "react-icons/go"
 
 function Van() {
+
+
+
 
   const param = useParams();
   const [ van, setVan ] = useState(null);
@@ -14,6 +16,13 @@ function Van() {
           .then(data => setVan(data.van));
   }, [param.id])
 
+  // back to previous page 
+  const location = useLocation();
+  const search = location.state?.search || "";
+  const typeArray = location.state.type;
+  const type = typeArray.map((item, index) => (
+    <span key={index}>{item}</span>
+  ));
 
    return (
      <>
@@ -21,8 +30,8 @@ function Van() {
         <div className="container">
           { van ? (
           <>
-          <Link to=".." className="flexRow items-center gap-2 py-2 capitalize">
-            <GoArrowLeft /> back to all vans
+          <Link to={`..${search}`} className="flexRow items-center gap-2 py-2 capitalize">
+            <GoArrowLeft /> back to {type.length > 0 ? type : "all"} vans
           </Link>
           <div className="van ">
             <img src={van.imageUrl} alt={van.name} />
