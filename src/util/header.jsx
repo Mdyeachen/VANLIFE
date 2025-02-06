@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
+import { FaRegUserCircle } from "react-icons/fa";
 
 const Header = () => {
    return (
@@ -25,6 +26,11 @@ const Header = () => {
                <NavLink 
                className={({isActive})=> isActive ? "text-cyan-950" : null}
                to="/vans">Van</NavLink> 
+            </li>
+            <li>
+               <NavLink 
+               className={({isActive})=> isActive ? "text-cyan-950" : null}
+               to="login"><FaRegUserCircle /></NavLink> 
             </li>
          </ul>
       </div>

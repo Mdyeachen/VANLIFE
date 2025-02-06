@@ -46,7 +46,7 @@ body{
 }
 
 .mainNav li{
-   @apply border-b-2 border-b-white hover:border-b-black text-stone-500 font-black uppercase
+   @apply border-b-2 border-b-transparent hover:border-b-black text-stone-500 font-black uppercase
 }
 
 .halfWidth {
@@ -72,3 +72,7 @@ body{
 .filterBtn.active{
    @apply bg-amber-200
 }
+
+/* .loginForm input{
+   @apply 
+} */

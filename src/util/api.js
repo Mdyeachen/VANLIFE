@@ -1,5 +1,6 @@
 export async function getVans(){
     const res = await fetch('/api/vans');
+
     if(!res.ok){
         throw{
             message : "failed to fatch vans api",
@@ -8,8 +9,8 @@ export async function getVans(){
         }
     }
     const data = await res.json();
-    console.log(res.statusText);
     return data;
+
 
 }
 

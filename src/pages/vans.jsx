@@ -1,30 +1,20 @@
-import { useEffect, useState } from "react"
-import { Link, useSearchParams } from "react-router-dom";
+
+import { Link, useSearchParams, useLoaderData } from "react-router-dom";
 import { getVans } from "../util/api";
+
+export function Loader() {
+  return getVans()
+}
 
 function Vans() {
   
-  const [ vanDetails , setVanDetails ] = useState([]);
+  // Loader data working
+  const data = useLoaderData();
+  const vanDetails = data.vans;
+
+
   const [ searchParams, setSearchParams ] = useSearchParams();
-  const [ loading, setLoading ] = useState(false);
-  const [ error , setError ] = useState(null)
 
-  useEffect(() => {
-    async function loadVans(){
-      setLoading(true)
-      try{
-        const data = await getVans();
-        setVanDetails(data.vans);
-      } catch (err) {
-        setError(err);
-      } finally{
-        setLoading(false);
-      }
-    }
-
-    loadVans();
-
-  }, [])
 
 
   const uniquType = [... new Set(vanDetails.map(van => van.type))]
@@ -39,15 +29,15 @@ function Vans() {
 
   // fillter button appear by this element
   const filterBtn = uniquType.map(type => (
-        <button 
-          key={type}
-          type="button" 
-          className={`filterBtn ${typeParam.includes(type) ? "active" : ""}`}
-          
-          onClick={() => handleFillterBtn(type)}
-          >
-            {type.toUpperCase()}
-          </button>
+    <button 
+      key={type}
+      type="button" 
+      className={`filterBtn ${typeParam.includes(type) ? "active" : ""}`}
+      
+      onClick={() => handleFillterBtn(type)}
+      >
+        {type.toUpperCase()}
+      </button>
   ))
 
   // single van detials by looping
@@ -67,28 +57,6 @@ function Vans() {
       </div>
   ))
 
-
-  // loading time show text
-  if(loading) {
-    return (
-      <div className="loading">
-        <div className="container">
-          <h1>Loading...</h1>
-        </div>
-      </div>
-    )
-  }
-
-  // error time show text
-  if(error) {
-    return (
-      <div className="loading">
-        <div className="container">
-          <h1>Error to fatching data...</h1>
-        </div>
-      </div>
-    )
-  }
 
    return (
      <>

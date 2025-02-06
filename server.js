@@ -1,4 +1,4 @@
-import { createServer, Model } from "miragejs";
+import { createServer, Model, /*Response*/ } from "miragejs";
 
 export default function makeServer() {
   createServer({
@@ -20,7 +20,7 @@ export default function makeServer() {
       this.logging = false;
       this.timing = 1000;
       this.get("/vans", (schema) => {
-        // return new Response(400, {}, { error : "error fatching data"})
+        // return new Response(400, { "Content-Type": "application/json" }, JSON.stringify({ error: "Vans not found" }))
         return schema.vans.all();
       });
 
