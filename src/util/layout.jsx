@@ -6,7 +6,9 @@ const Layout = () => {
    return (
       <>
          <Header />
-         <Outlet />
+         <div className="min-h-[calc(100vh-180px)] w-full" >
+            <Outlet />
+         </div>
          <Footer />
       </>
    )

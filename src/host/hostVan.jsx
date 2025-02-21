@@ -1,19 +1,38 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { getHostVans } from "../util/api";
+import Loading from "../util/loading";
+import { ErrorHandle } from "../util/errorHandle";
+
 const HostVan = () => {
 
-   const [ van, setVan ] = useState([]);
+   const [ van, setVan ] = useState([]); // state management of van
+   const [ loading, setLoading ] = useState(false) // state management of loading effect
+   const [ error, setError ] = useState(null) // state management of errror handleing
 
    useEffect(() => {
-      fetch("/api/vans")
-            .then(res => res.json())
-            .then(data => setVan(data.vans))
+      const loadingHostVans = async () => {
+         setLoading(true)// loading function runing
+         //handle errror
+         try{
+            const data = await getHostVans();
+            setVan(data.vans);
+         } catch (err) {
+            console.log(err)
+            console.log("Hello")
+            setError(err)
+         } finally{
+            setLoading(false)// loading function turn off
+         }
+      }
+      loadingHostVans()
    }, [])
 
+   // all vans element appear by this component
    const vanElement = van.map(item => (
       <div key={item.id}>
-         <Link className="single-van flexRow py-3" to={item.id}>
+         <Link className="single-van flexRow py-3" to={`/host/vans/${item.id}`}>
             <img className="w-14 rounded" src={item.imageUrl} alt="" />
             <div className="vanContent">
                <h2 className="text-lg font-black">{item.name}</h2>
@@ -23,6 +42,15 @@ const HostVan = () => {
       </div>
    ))
 
+   // loading handle
+   if(loading) {
+      return <Loading />
+   }
+
+   // error handle
+   if(error) {
+   return  ErrorHandle(error)
+   }
 
    return (
       <>
@@ -31,12 +59,9 @@ const HostVan = () => {
             <h1 className="text-2xl font-black capitalize">Your Listed vans</h1>
          </div>
 
-         {van.length > 0 ? (
-            <div className="container">
-               {vanElement}
-            </div>
-         ) : <h1>Loading...</h1>}
-
+         <div className="container">
+            {vanElement}
+         </div>
       </section>
       </>
    )

@@ -5,7 +5,7 @@ function Home() {
   return (
     <>
       <section 
-        className="home-page bg-cover bg-center relative z-1 min-h-[75vh] flex items-center after:bg-black after:h-full after:w-full after:absolute after:top-0 after:left-0 after:z-[-1] after:opacity-20"
+        className="home-page bg-cover bg-center relative z-1 min-h-[calc(100vh-180px)] flex items-center after:bg-black after:h-full after:w-full after:absolute after:top-0 after:left-0 after:z-[-1] after:opacity-20"
         style={{ backgroundImage: `url(${home})` }}
       >
         <div className="container">

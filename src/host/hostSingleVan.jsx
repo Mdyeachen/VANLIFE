@@ -2,18 +2,44 @@ import { useEffect, useState } from "react";
 import { useParams, Link, Outlet, NavLink } from "react-router-dom";
 import { GoArrowLeft } from "react-icons/go"
 
+import { getHostVans } from "../util/api";
+import Loading from "../util/loading";
+import { ErrorHandle } from "../util/errorHandle";
 
 const HostSingleVan = () => {
-   const param = useParams();
-   const [ van, setVan ] = useState(null);
+   const param = useParams(); // get van id from the previous page
+   const [ van, setVan ] = useState(null) // state management of the van data
+   const [ loading, setLoading ] = useState(false) // state management of loading 
+   const [ error, setError ] = useState(null) // state management of error
 
    useEffect(() => {
-      fetch(`/api/vans/${param.id}`)
-         .then(res => res.json())
-         .then(data => setVan(data.van));
+      const getData = async () => {
+         setLoading(true) // loading function runing
+         //handle errror
+         try{
+            const data = await getHostVans(param.id)
+            setVan(data.van);
+         } catch(err){
+            console.log(err)
+            setError(err)
+         } finally{
+            setLoading(false) // off the loading function
+         }
+
+      }
+      getData()
+
    }, [param.id])
 
+   // loading function
+   if(loading){
+      return <Loading />
+   }
 
+   // error function
+   if(error){
+      return ErrorHandle(error)
+   }
 
    return (
       <>

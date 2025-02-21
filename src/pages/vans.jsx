@@ -1,49 +1,50 @@
-
 import { Link, useSearchParams, useLoaderData } from "react-router-dom";
-import { getVans } from "../util/api";
-
-export function Loader() {
-  return getVans()
-}
 
 function Vans() {
+
+  const [ searchParams, setSearchParams ] = useSearchParams() // get all search param
+  const loaderData = useLoaderData() //get vans data throw loader
+  const vanDetails  = loaderData?.vans || []; // get all vans
   
-  // Loader data working
-  const data = useLoaderData();
-  const vanDetails = data.vans;
+  const filterType = searchParams.getAll("type") || []; // get all search param
+  const uniqueSearchType = [...new Set(vanDetails.map(van => van.type))] //get all search & unique Type for create filter button element
 
+  // filter accrouding to search param
+  const filterVansDetials = filterType.length > 0 ? 
+        vanDetails.filter(van => van?.type && filterType.includes(van.type)) :
+        vanDetails;
 
-  const [ searchParams, setSearchParams ] = useSearchParams();
+  // handleFilterBtn & react in the url section by this function
+  const handleFilterBtn = (btnType) => {
+    const newType = filterType.includes(btnType) ? 
+          filterType.filter(type => type != btnType) : 
+          [...filterType, btnType]
 
-
-
-  const uniquType = [... new Set(vanDetails.map(van => van.type))]
-  const typeParam = searchParams.getAll('type');
-  const selectedVans = typeParam.length > 0 ? vanDetails.filter(van => typeParam.includes(van.type)) : vanDetails;
-
-
-  const handleFillterBtn = (type) => {
-    const newType = typeParam.includes(type) ? typeParam.filter(item => item != type) : [...typeParam, type];
-    setSearchParams(newType.length ? {type : newType} : {})
+    setSearchParams(
+      newType.length ? 
+      {type : newType} : 
+      {}
+    )
   }
 
-  // fillter button appear by this element
-  const filterBtn = uniquType.map(type => (
+  // all vans filter button accroding to uniqueSearchType Element & rendering by this Component
+  const filterBtn = uniqueSearchType.map((btn, index) => (
     <button 
-      key={type}
-      type="button" 
-      className={`filterBtn ${typeParam.includes(type) ? "active" : ""}`}
-      
-      onClick={() => handleFillterBtn(type)}
-      >
-        {type.toUpperCase()}
-      </button>
+    key={index}
+    className={`filterBtn ${filterType.includes(btn) ? "active" : ""}`}
+    onClick={() => handleFilterBtn(btn)}
+    >
+      {btn.toUpperCase()}
+    </button>
   ))
 
-  // single van detials by looping
-  const vanElement = selectedVans.map(van => (
+  // all vans Element rendering by this Component
+  const vanElement = filterVansDetials.map(van => (
       <div key={van.id} className="van halfWidth">
-        <Link to={`/vans/${van.id}`} state={{search : `?${searchParams.toString()}`, type : typeParam}}>
+        <Link 
+          state={{search : searchParams.toString()}}
+          to={`/vans/${van.id}`}
+        >
           <img className="rounded" src={van.imageUrl} alt={van.name} />
           <div className="van-content font-bold flexCol relative gap-1.5 py-2">
             <h2 className="text-sm">{van.name}</h2>
@@ -60,38 +61,35 @@ function Vans() {
 
    return (
      <>
+      <section className="vans-header py-6">
+        <div className="container">
+          <h1 className="text-2xl font-bold">Explore our van options</h1>
+        </div>
+        <div className="container flexRow gap-2 py-2">
+          {filterBtn}
 
-          <section className="vans-header flexCol gap-2 py-5">
-          <div className="container">
-            <h1 className="text-2xl font-bold">Explore our van options</h1>
-          </div>
-          <div className="container vans-filters flexRow gap-1">
-            
-            
-            {filterBtn}
-            
-            {
-              searchParams.has("type") ? (
-                <button 
-                type="button" 
-                className="filterBtn clear"
-                onClick={() => setSearchParams({})}
-                >
-                  Clear Filter
-                </button>
-              ) : null
-            }
-          </div>
-        </section>
-          <section className="vans">
-            <div className="container flexRow gap-3 justify-between">
-              {vanElement}
-            </div>
-          </section>
+          {filterType.length ? (
+            <button 
+              className="filterBtn clear"
+              onClick={() => setSearchParams({})}
+            >
+                Clear Filter
+            </button>
 
+          ) :
+            null
+          }
+        </div>
+      </section>
+      
+       <section className="vans">
+        <div className="container flexRow gap-3 justify-between">
+          {vanElement}
+        </div>
+       </section>
      </>
    )
  }
  
  export default Vans
-
+ 

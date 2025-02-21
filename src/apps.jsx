@@ -1,6 +1,6 @@
 import { 
    RouterProvider, 
-   createBrowserRouter, 
+   createBrowserRouter,
    createRoutesFromElements, 
    Route 
 } from "react-router-dom"
@@ -8,10 +8,8 @@ import {
 import Layout from "./util/layout"
 import Home from "./pages/home"
 import About from "./pages/about"
-import Vans, {Loader as vanPageLoader}  from "./pages/vans"
+import Vans from "./pages/vans"
 import Van from "./pages/van"
-import NotFound from "./pages/notFound"
-import {ErrorHandler} from "./util/error"
 import HostLayout from "./util/hostLayout"
 import Dashboard from "./host/dashboard"
 import Income from "./host/income"
@@ -21,12 +19,19 @@ import HostSingleVan from "./host/hostSingleVan"
 import HostVanDetials from "./host/hostvanDetials"
 import HostVanPrice from "./host/hostvanprice"
 import HostVanPhoto from "./host/hostvanphoto"
-import makeServer from "./../server"
-import Login from "./pages/login"
+import MakeServer from "./../server.js";
+import NotFoundPage from "./util/notFound.jsx"
+import { VansLoader, VanLoader, LoginLoader } from "./util/loader.jsx"
+import { LoaderError as Error } from "./util/errorHandle.jsx"
+import LoginForm, { ActionFun as LoginAction} from "./util/login.jsx";
+import SignForm from "./util/signUp.jsx"
+import { authRequired } from "./util/auth.jsx"
+
+
 
 const router = createBrowserRouter(createRoutesFromElements(
    <Route path='/' element={<Layout />}>
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<NotFoundPage />} />
       <Route index element={<Home />} />
       <Route path='about' element={<About />} />
 
@@ -34,13 +39,30 @@ const router = createBrowserRouter(createRoutesFromElements(
          <Route 
          index 
          element={<Vans />} 
-         errorElement={<ErrorHandler />}
-         loader={vanPageLoader}
+         errorElement={<Error />}
+         loader={VansLoader}
          />
-         <Route path=':id' element={<Van />} />
+         <Route 
+         path=':id' 
+         element={<Van />} 
+         errorElement={<Error />}
+         loader={VanLoader}
+         />
       </Route>
+      <Route 
+      path="login" 
+      element={<LoginForm />}
+      loader={LoginLoader}
+      action={LoginAction}
+      />
+      <Route path="signin" element={<SignForm />} />
 
-      <Route path='host' element={<HostLayout />} >
+
+      <Route 
+      path='host' 
+      element={<HostLayout />} 
+      loader={authRequired}
+      >
          <Route index element={<Dashboard />} /> 
          <Route path='income' element={<Income />} />
          <Route path='reviews' element={<Reviews />} />
@@ -54,19 +76,16 @@ const router = createBrowserRouter(createRoutesFromElements(
          </Route>
       </Route>
 
-      <Route path="login" element={<Login/>} />
    </Route>
 ))
 
 
 
 const Apps = () => {
-
    // for adding the api
-   makeServer();
+   MakeServer();
 
    return (
-
    <>
       <RouterProvider router={router} />
    </>

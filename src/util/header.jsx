@@ -1,7 +1,16 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
+import { FaUserSlash } from "react-icons/fa";
 
 const Header = () => {
+   const navigate = useNavigate(); // Call useNavigate at the top level
+
+   const fakeLogOut = async () => {
+      localStorage.removeItem("login"); // Remove login info
+      navigate("/login"); // Navigate to the login page
+   }
+
+   console.log(JSON.parse(localStorage.getItem("login")))
    return (
    <section className="py-8">
       <div className="container flex flex-wrap justify-between">
@@ -28,9 +37,22 @@ const Header = () => {
                to="/vans">Van</NavLink> 
             </li>
             <li>
-               <NavLink 
+               <NavLink
                className={({isActive})=> isActive ? "text-cyan-950" : null}
-               to="login"><FaRegUserCircle /></NavLink> 
+               to="/login"
+               aria-label="login"
+               >
+                  <FaRegUserCircle />
+               </NavLink>
+            </li>
+            <li>
+               <button 
+               onClick={fakeLogOut}
+               className="flex items-center"
+               aria-label="log out"
+               >
+                  <FaUserSlash />
+               </button>
             </li>
          </ul>
       </div>
