@@ -57,7 +57,6 @@ const router = createBrowserRouter(createRoutesFromElements(
       />
       <Route path="signin" element={<SignForm />} />
 
-
       <Route 
       path='host' 
       element={<HostLayout />} 
@@ -66,7 +65,7 @@ const router = createBrowserRouter(createRoutesFromElements(
          <Route index element={<Dashboard />} /> 
          <Route path='income' element={<Income />} />
          <Route path='reviews' element={<Reviews />} />
-         <Route path='vans' >
+         <Route path='vans'>
             <Route index element={<HostVan />} />
             <Route path=":id" element={<HostSingleVan />}>
                <Route index element={<HostVanDetials />}/>

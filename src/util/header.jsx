@@ -6,11 +6,12 @@ const Header = () => {
    const navigate = useNavigate(); // Call useNavigate at the top level
 
    const fakeLogOut = async () => {
+      const currentPath = window.location.pathname; // Get the current URL path
       localStorage.removeItem("login"); // Remove login info
-      navigate("/login"); // Navigate to the login page
+      navigate(`/login?redirectUrl=${currentPath}`); // Navigate to the login page
    }
 
-   console.log(JSON.parse(localStorage.getItem("login")))
+ 
    return (
    <section className="py-8">
       <div className="container flex flex-wrap justify-between">

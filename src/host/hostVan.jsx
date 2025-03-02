@@ -19,8 +19,6 @@ const HostVan = () => {
             const data = await getHostVans();
             setVan(data.vans);
          } catch (err) {
-            console.log(err)
-            console.log("Hello")
             setError(err)
          } finally{
             setLoading(false)// loading function turn off

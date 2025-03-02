@@ -14,10 +14,15 @@ export const ActionFun = async ({ request }) => {
     const formData = await request.formData();
     const username = formData.get("username");
     const password = formData.get("password");
+    //get the redirect url
+    const redirectPageUrl = new URL(request.url).searchParams.get('redirectUrl'); 
+    const redirectUrl = redirectPageUrl || "/host";
+
+    
     try{
         const data = await loginUser({username, password})
         localStorage.setItem('login', true);
-        return redirect('/host');
+        return redirect(redirectUrl);
     }catch(err) {
         localStorage.setItem('login', false);
         return err.message || "Login failed. Please try again."
