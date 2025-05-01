@@ -7,19 +7,32 @@
 
 ## 📱 Responsive Preview
 
+## 🖼️ Template Previews
+
+<div style="background-color: #1e1e1e; padding: 20px; border-radius: 10px; color: white;">
+
+### 📱 Mobile Views
 <p align="center">
-  <img src="preview/Mobile-view.png" alt="Vanlife Application Desktop Template" width="32%"/>
-  <img src="preview/login.png" alt="Vanlife Application Login Template" width="32%"/>
-  <img src="preview/sign-in.png" alt="Vanlife Application Sign In Template" width="32%"/>
-  <img src="preview/about-page.png" alt="Vanlife Application About Template" width="32%"/>
-  <img src="preview/vans.png" alt="Vanlife Application All Vans Template" width="32%"/>
-  <img src="preview/single-van.png" alt="Vanlife Application Single Vans Template" width="32%"/>
+  <img src="preview/Mobile-view.png" alt="Vanlife App - Mobile View" width="30%" />
+  <img src="preview/login.png" alt="Vanlife App - Login Page" width="30%" />
+  <img src="preview/sign-in.png" alt="Vanlife App - Sign In Page" width="30%" />
 </p>
 
+### 📄 Page Layouts
 <p align="center">
-  <img src="preview/banner.png" alt="Vanlife Application Desktop Template" width="45%"/>
-  <img src="preview/tablet.png" alt="Vanlife Application Tablet Template" width="45%"/>
+  <img src="preview/about-page.png" alt="Vanlife App - About Page" width="30%" />
+  <img src="preview/vans.png" alt="Vanlife App - All Vans Page" width="30%" />
+  <img src="preview/single-van.png" alt="Vanlife App - Single Van Details" width="30%" />
 </p>
+
+### 💻 Responsive Design Showcase
+<p align="center">
+  <img src="preview/banner.png" alt="Vanlife App - Desktop Banner View" width="45%" />
+  <img src="preview/tablet.png" alt="Vanlife App - Tablet View" width="45%" />
+</p>
+
+</div>
+
 
 ## 📂 Project Structure
 
