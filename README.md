@@ -9,6 +9,8 @@
 
 ## 🖼️ Template Previews
 
+<a href="https://texiservices.netlify.app/">Live Previews</a>
+
 <div style="background-color: #1e1e1e; padding: 20px; border-radius: 10px; color: white;">
 
 ### 📱 Mobile Views
