@@ -9,7 +9,7 @@
 
 ## 🖼️ Template Previews
 
-<a href="https://texiservices.netlify.app/">Live Previews</a>
+<a href="https://texiservices.netlify.app/">Live Previews : https://texiservices.netlify.app/</a>
 
 <div style="background-color: #1e1e1e; padding: 20px; border-radius: 10px; color: white;">
 
